@@ -28,7 +28,7 @@ public class QuantityLength {
         this.unit = unit;
     }
 
-    // UC5 Static Conversion Method
+    // UC5 Conversion
     public static double convert(double value, LengthUnit source, LengthUnit target) {
 
         if (!Double.isFinite(value))
@@ -42,10 +42,25 @@ public class QuantityLength {
 
     // Instance conversion
     public QuantityLength convertTo(LengthUnit target) {
+        return new QuantityLength(convert(value, unit, target), target);
+    }
 
-        double convertedValue = convert(this.value, this.unit, target);
+    //  UC6 Addition Method
+    public QuantityLength add(QuantityLength other) {
 
-        return new QuantityLength(convertedValue, target);
+        if (other == null)
+            throw new IllegalArgumentException("Second operand cannot be null");
+
+        // convert both to base unit (inches)
+        double base1 = this.value * this.unit.getConversionFactor();
+        double base2 = other.value * other.unit.getConversionFactor();
+
+        double sumBase = base1 + base2;
+
+        // convert result back to first operand unit
+        double resultValue = sumBase / this.unit.getConversionFactor();
+
+        return new QuantityLength(resultValue, this.unit);
     }
 
     @Override
@@ -59,17 +74,13 @@ public class QuantityLength {
         QuantityLength other = (QuantityLength) obj;
 
         return Double.compare(
-                this.convertToBaseUnit(),
-                other.convertToBaseUnit()
+                this.value * this.unit.getConversionFactor(),
+                other.value * other.unit.getConversionFactor()
         ) == 0;
-    }
-
-    private double convertToBaseUnit() {
-        return value * unit.getConversionFactor();
     }
 
     @Override
     public String toString() {
-        return value + " " + unit;
+        return "Quantity(" + value + ", " + unit + ")";
     }
 }

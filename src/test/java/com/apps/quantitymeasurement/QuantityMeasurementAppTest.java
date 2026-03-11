@@ -86,4 +86,30 @@ public class QuantityMeasurementAppTest {
         assertEquals(36.0,
                 QuantityLength.convert(1.0, LengthUnit.YARDS, LengthUnit.INCHES));
     }
+    @Test
+    void testAddition_SameUnit_FeetPlusFeet() {
+
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength q2 = new QuantityLength(2.0, LengthUnit.FEET);
+
+        assertEquals(new QuantityLength(3.0, LengthUnit.FEET), q1.add(q2));
+    }
+
+    @Test
+    void testAddition_CrossUnit_FeetPlusInches() {
+
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength q2 = new QuantityLength(12.0, LengthUnit.INCHES);
+
+        assertEquals(new QuantityLength(2.0, LengthUnit.FEET), q1.add(q2));
+    }
+
+    @Test
+    void testAddition_CrossUnit_InchPlusFeet() {
+
+        QuantityLength q1 = new QuantityLength(12.0, LengthUnit.INCHES);
+        QuantityLength q2 = new QuantityLength(1.0, LengthUnit.FEET);
+
+        assertEquals(new QuantityLength(24.0, LengthUnit.INCHES), q1.add(q2));
+    }
 }

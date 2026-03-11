@@ -38,6 +38,8 @@ public class QuantityMeasurementApp {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
 
+            System.out.println("---- Quantity Measurement App ----");
+
             double value1 = readDouble(reader, "Enter value 1: ");
             LengthUnit unit1 = readUnit(reader, "Enter unit 1 (FEET/INCHES/YARDS/CENTIMETERS): ");
 
@@ -47,9 +49,14 @@ public class QuantityMeasurementApp {
             QuantityLength q1 = new QuantityLength(value1, unit1);
             QuantityLength q2 = new QuantityLength(value2, unit2);
 
+            // Equality check
             boolean result = q1.equals(q2);
-
             System.out.println("Are the two measurements equal? " + result);
+
+            // UC6 Addition
+            QuantityLength sum = q1.add(q2);
+
+           System.out.println("Addition Result: " + sum);
 
         } catch (IOException e) {
             System.out.println("Input error: " + e.getMessage());
