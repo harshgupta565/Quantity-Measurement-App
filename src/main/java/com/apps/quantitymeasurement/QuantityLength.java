@@ -4,13 +4,12 @@ enum LengthUnit {
 
     FEET(12.0),
     INCHES(1.0),
-    YARDS(3.0),
-    CENTIMETERS(0.0328084);
+    YARDS(36.0),
+    CENTIMETERS(0.393701);
 
     private final double conversionFactor;
 
     LengthUnit(double conversionFactor) {
-
         this.conversionFactor = conversionFactor;
     }
 
@@ -27,6 +26,26 @@ public class QuantityLength {
     public QuantityLength(double value, LengthUnit unit) {
         this.value = value;
         this.unit = unit;
+    }
+
+    // UC5 Static Conversion Method
+    public static double convert(double value, LengthUnit source, LengthUnit target) {
+
+        if (!Double.isFinite(value))
+            throw new IllegalArgumentException("Invalid value");
+
+        if (source == null || target == null)
+            throw new IllegalArgumentException("Unit cannot be null");
+
+        return value * (source.getConversionFactor() / target.getConversionFactor());
+    }
+
+    // Instance conversion
+    public QuantityLength convertTo(LengthUnit target) {
+
+        double convertedValue = convert(this.value, this.unit, target);
+
+        return new QuantityLength(convertedValue, target);
     }
 
     @Override
@@ -47,5 +66,10 @@ public class QuantityLength {
 
     private double convertToBaseUnit() {
         return value * unit.getConversionFactor();
+    }
+
+    @Override
+    public String toString() {
+        return value + " " + unit;
     }
 }
