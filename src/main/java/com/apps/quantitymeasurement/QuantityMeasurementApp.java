@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 public class QuantityMeasurementApp {
 
     private static double readDouble(BufferedReader reader, String prompt) throws IOException {
+
         while (true) {
             System.out.print(prompt);
             String input = reader.readLine();
@@ -19,17 +20,32 @@ public class QuantityMeasurementApp {
         }
     }
 
+    private static LengthUnit readUnit(BufferedReader reader, String prompt) throws IOException {
+
+        while (true) {
+            System.out.print(prompt);
+            String input = reader.readLine().toUpperCase();
+
+            try {
+                return LengthUnit.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid unit. Enter FEET, INCHES, YARDS or CENTIMETERS");
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-        try {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
 
             double value1 = readDouble(reader, "Enter value 1: ");
-            double value2 = readDouble(reader, "Enter value 2: ");
+            LengthUnit unit1 = readUnit(reader, "Enter unit 1 (FEET/INCHES/YARDS/CENTIMETERS): ");
 
-            QuantityLength q1 = new QuantityLength(value1, LengthUnit.INCHES);
-            QuantityLength q2 = new QuantityLength(value2, LengthUnit.FEET);
+            double value2 = readDouble(reader, "Enter value 2: ");
+            LengthUnit unit2 = readUnit(reader, "Enter unit 2 (FEET/INCHES/YARDS/CENTIMETERS): ");
+
+            QuantityLength q1 = new QuantityLength(value1, unit1);
+            QuantityLength q2 = new QuantityLength(value2, unit2);
 
             boolean result = q1.equals(q2);
 
