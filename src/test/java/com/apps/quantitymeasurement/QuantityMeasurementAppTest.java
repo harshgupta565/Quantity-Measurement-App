@@ -3,7 +3,75 @@ package com.apps.quantitymeasurement;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 public class QuantityMeasurementAppTest {
 
+    @Test
+    public void testEquality_FeetToFeet_SameValue() {
+
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength q2 = new QuantityLength(1.0, LengthUnit.FEET);
+
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    public void testEquality_InchToInch_SameValue() {
+
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.INCHES);
+        QuantityLength q2 = new QuantityLength(1.0, LengthUnit.INCHES);
+
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    public void testEquality_FeetToInch_EquivalentValue() {
+
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength q2 = new QuantityLength(12.0, LengthUnit.INCHES);
+
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    public void testEquality_InchToFeet_EquivalentValue() {
+
+        QuantityLength q1 = new QuantityLength(12.0, LengthUnit.INCHES);
+        QuantityLength q2 = new QuantityLength(1.0, LengthUnit.FEET);
+
+        assertTrue(q1.equals(q2));
+    }
+
+    @Test
+    public void testEquality_FeetToFeet_DifferentValue() {
+
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
+        QuantityLength q2 = new QuantityLength(2.0, LengthUnit.FEET);
+
+        assertFalse(q1.equals(q2));
+    }
+
+    @Test
+    public void testEquality_InchToInch_DifferentValue() {
+
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.INCHES);
+        QuantityLength q2 = new QuantityLength(2.0, LengthUnit.INCHES);
+
+        assertFalse(q1.equals(q2));
+    }
+
+    @Test
+    public void testEquality_SameReference() {
+
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
+
+        assertTrue(q1.equals(q1));
+    }
+
+    @Test
+    public void testEquality_NullComparison() {
+
+        QuantityLength q1 = new QuantityLength(1.0, LengthUnit.FEET);
+
+        assertFalse(q1.equals(null));
+    }
 }
