@@ -1,54 +1,73 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+public class QuantityMeasurementApp {
 
-class Feet{
-    private final  double value;
+    // Feet class
+    static class Feet {
 
-    public Feet(double value) {
-        this.value = value;
-    }
+        private final double value;
 
-    @Override
-    public boolean equals(Object obj) {
-        if(obj==null || obj.getClass() !=this.getClass()) return false;
-
-        return Double.compare(((Feet) obj).value, this.value)==0;
-    }
-}
-
-public class QuantityMeasurementApp  {
-    private static double readDouble(BufferedReader reader, String prompt) throws IOException {
-        while (true) {
-            System.out.print(prompt);
-            String input = reader.readLine();
-
-            try {
-                return Double.parseDouble(input);
-            } catch (NumberFormatException e) {
-                System.out.println(" Invalid number. Please try again.");
-            }
-        }
-    }
-    public static void main(String[] args)  {
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
-        try {
-            double val1 = readDouble(bufferedReader, "Enter value 1 in feet: ");
-            double val2 = readDouble(bufferedReader, "Enter value 2 in feet: ");
-
-            Feet f1 = new Feet(val1);
-            Feet f2 = new Feet(val2);
-
-            boolean equals = f1.equals(f2);
-            System.out.printf("The values are equal: %b%n", equals);
-
-        } catch (IOException e) {
-            System.out.println(" Input error: " + e.getMessage());
+        public Feet(double value) {
+            this.value = value;
         }
 
+        @Override
+        public boolean equals(Object obj) {
 
+            if (this == obj)
+                return true;
+
+            if (obj == null || getClass() != obj.getClass())
+                return false;
+
+            Feet feet = (Feet) obj;
+
+            return Double.compare(this.value, feet.value) == 0;
+        }
     }
 
+    // Inches class
+    static class Inches {
+
+        private final double value;
+
+        public Inches(double value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+
+            if (this == obj)
+                return true;
+
+            if (obj == null || getClass() != obj.getClass())
+                return false;
+
+            Inches inches = (Inches) obj;
+
+            return Double.compare(this.value, inches.value) == 0;
+        }
+    }
+
+    // Method for feet equality
+    public static boolean checkFeetEquality(double v1, double v2) {
+        Feet f1 = new Feet(v1);
+        Feet f2 = new Feet(v2);
+        return f1.equals(f2);
+    }
+
+    // Method for inches equality
+    public static boolean checkInchEquality(double v1, double v2) {
+        Inches i1 = new Inches(v1);
+        Inches i2 = new Inches(v2);
+        return i1.equals(i2);
+    }
+
+    public static void main(String[] args) {
+
+        boolean feetResult = checkFeetEquality(1.0, 1.0);
+        boolean inchResult = checkInchEquality(1.0, 1.0);
+
+        System.out.println("Feet Equal: " + feetResult);
+        System.out.println("Inch Equal: " + inchResult);
+    }
 }

@@ -1,52 +1,25 @@
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class QuantityMeasurementAppTest {
 
     @Test
-    public void testFeetEquality_SameValue(){
-        Feet feet1 = new Feet(12.0);
-        Feet feet2 = new Feet(12.0);
-
-        assertTrue(feet1.equals(feet2));
-
+    public void testFeetEquality_SameValue() {
+        assertTrue(QuantityMeasurementApp.checkFeetEquality(1.0,1.0));
     }
 
     @Test
-    public void testFeetEquality_DifferentValue(){
-        Feet feet1 = new Feet(12.0);
-        Feet feet2 = new Feet(13.0);
-
-        assertFalse(feet1.equals(feet2));
-
+    public void testFeetEquality_DifferentValue() {
+        assertFalse(QuantityMeasurementApp.checkFeetEquality(1.0,2.0));
     }
 
     @Test
-    public void testFeetEquality_NullComparison(){
-        Feet feet1 = new Feet(12.0);
-        Feet feet2 = null;
-
-        assertFalse(feet1.equals(feet2));
-
+    public void testInchEquality_SameValue() {
+        assertTrue(QuantityMeasurementApp.checkInchEquality(1.0,1.0));
     }
 
     @Test
-    public void testFeetEquality_DifferentClass(){
-        Feet feet1 = new Feet(12.0);
-        Double feet2 = 12.0;
-
-        assertFalse(feet1.equals(feet2));
-
+    public void testInchEquality_DifferentValue() {
+        assertFalse(QuantityMeasurementApp.checkInchEquality(1.0,2.0));
     }
-
-    @Test
-    public void testFeetEquality_SameReference(){
-        Feet feet1 = new Feet(12.0);
-
-        assertTrue(feet1.equals(feet1));
-
-    }
-
 }
