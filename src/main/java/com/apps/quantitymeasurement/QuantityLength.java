@@ -1,82 +1,65 @@
 package com.apps.quantitymeasurement;
 
-enum LengthUnit {
-
-    FEET(12.0),
-    INCHES(1.0),
-    YARDS(36.0),
-    CENTIMETERS(0.393701);
-
-    private final double conversionFactor;
-
-    LengthUnit(double conversionFactor) {
-        this.conversionFactor = conversionFactor;
-    }
-
-    public double getConversionFactor() {
-        return conversionFactor;
-    }
-}
-
 public class QuantityLength {
 
     private final double value;
     private final LengthUnit unit;
 
     public QuantityLength(double value, LengthUnit unit) {
+
+        if (unit == null)
+            throw new IllegalArgumentException("Unit cannot be null");
+
+        if (!Double.isFinite(value))
+            throw new IllegalArgumentException("Invalid value");
+
         this.value = value;
         this.unit = unit;
     }
 
     // UC5 Conversion
-    public static double convert(double value, LengthUnit source, LengthUnit target) {
-
-        if (!Double.isFinite(value))
-            throw new IllegalArgumentException("Invalid value");
-
-        if (source == null || target == null)
-            throw new IllegalArgumentException("Unit cannot be null");
-
-        return value * (source.getConversionFactor() / target.getConversionFactor());
-    }
-
-    // Instance conversion
     public QuantityLength convertTo(LengthUnit target) {
-        return new QuantityLength(convert(value, unit, target), target);
+
+        double baseValue = unit.convertToBaseUnit(value);
+        double convertedValue = target.convertFromBaseUnit(baseValue);
+
+        return new QuantityLength(convertedValue, target);
     }
 
-    //  UC6 Addition Method
-    public QuantityLength add(QuantityLength other) {
+    // UC7 Addition with target unit
+    public QuantityLength add(QuantityLength other, LengthUnit targetUnit) {
 
         if (other == null)
             throw new IllegalArgumentException("Second operand cannot be null");
 
-        // convert both to base unit (inches)
-        double base1 = this.value * this.unit.getConversionFactor();
-        double base2 = other.value * other.unit.getConversionFactor();
+        if (targetUnit == null)
+            throw new IllegalArgumentException("Target unit cannot be null");
+
+        double base1 = unit.convertToBaseUnit(value);
+        double base2 = other.unit.convertToBaseUnit(other.value);
 
         double sumBase = base1 + base2;
 
-        // convert result back to first operand unit
-        double resultValue = sumBase / this.unit.getConversionFactor();
+        double result = targetUnit.convertFromBaseUnit(sumBase);
 
-        return new QuantityLength(resultValue, this.unit);
+        return new QuantityLength(result, targetUnit);
     }
 
     @Override
     public boolean equals(Object obj) {
 
-        if (this == obj) return true;
+        if (this == obj)
+            return true;
 
-        if (obj == null || getClass() != obj.getClass())
+        if (!(obj instanceof QuantityLength))
             return false;
 
         QuantityLength other = (QuantityLength) obj;
 
-        return Double.compare(
-                this.value * this.unit.getConversionFactor(),
-                other.value * other.unit.getConversionFactor()
-        ) == 0;
+        double baseValue1 = unit.convertToBaseUnit(value);
+        double baseValue2 = other.unit.convertToBaseUnit(other.value);
+
+        return Math.abs(baseValue1 - baseValue2) < 0.0001;
     }
 
     @Override

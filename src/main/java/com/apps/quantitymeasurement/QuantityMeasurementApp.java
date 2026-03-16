@@ -49,14 +49,17 @@ public class QuantityMeasurementApp {
             QuantityLength q1 = new QuantityLength(value1, unit1);
             QuantityLength q2 = new QuantityLength(value2, unit2);
 
-            // Equality check
+            // Equality Check
             boolean result = q1.equals(q2);
             System.out.println("Are the two measurements equal? " + result);
 
-            // UC6 Addition
-            QuantityLength sum = q1.add(q2);
+            // Addition
+            QuantityLength sum = q1.add(q2, unit1);
+            System.out.println("Addition Result: " + sum);
 
-           System.out.println("Addition Result: " + sum);
+            // Conversion
+            QuantityLength converted = q1.convertTo(LengthUnit.INCHES);
+            System.out.println("Converted Value: " + converted);
 
         } catch (IOException e) {
             System.out.println("Input error: " + e.getMessage());
