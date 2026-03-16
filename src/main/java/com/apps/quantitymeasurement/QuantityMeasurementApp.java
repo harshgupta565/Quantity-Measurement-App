@@ -1,68 +1,39 @@
 package com.apps.quantitymeasurement;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 public class QuantityMeasurementApp {
 
-    private static double readDouble(BufferedReader reader, String prompt) throws IOException {
+    public static <U extends IMeasurable> void demonstrateEquality(
+            Quantity<U> q1, Quantity<U> q2) {
 
-        while (true) {
-            System.out.print(prompt);
-            String input = reader.readLine();
-
-            try {
-                return Double.parseDouble(input);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number. Please try again.");
-            }
-        }
+        System.out.println("Are equal: " + q1.equals(q2));
     }
 
-    private static LengthUnit readUnit(BufferedReader reader, String prompt) throws IOException {
+    public static <U extends IMeasurable> void demonstrateConversion(
+            Quantity<U> quantity, U targetUnit) {
 
-        while (true) {
-            System.out.print(prompt);
-            String input = reader.readLine().toUpperCase();
+        System.out.println(quantity.convertTo(targetUnit));
+    }
 
-            try {
-                return LengthUnit.valueOf(input);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid unit. Enter FEET, INCHES, YARDS or CENTIMETERS");
-            }
-        }
+    public static <U extends IMeasurable> void demonstrateAddition(
+            Quantity<U> q1, Quantity<U> q2, U targetUnit) {
+
+        System.out.println(q1.add(q2, targetUnit));
     }
 
     public static void main(String[] args) {
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+        Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
+        Quantity<LengthUnit> l2 = new Quantity<>(12.0, LengthUnit.INCHES);
 
-            System.out.println("---- Quantity Measurement App ----");
+        demonstrateEquality(l1, l2);
+        demonstrateConversion(l1, LengthUnit.INCHES);
+        demonstrateAddition(l1, l2, LengthUnit.FEET);
 
-            double value1 = readDouble(reader, "Enter value 1: ");
-            LengthUnit unit1 = readUnit(reader, "Enter unit 1 (FEET/INCHES/YARDS/CENTIMETERS): ");
+        Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
+        Quantity<WeightUnit> w2 = new Quantity<>(1000.0, WeightUnit.GRAM);
 
-            double value2 = readDouble(reader, "Enter value 2: ");
-            LengthUnit unit2 = readUnit(reader, "Enter unit 2 (FEET/INCHES/YARDS/CENTIMETERS): ");
-
-            QuantityLength q1 = new QuantityLength(value1, unit1);
-            QuantityLength q2 = new QuantityLength(value2, unit2);
-
-            // Equality Check
-            boolean result = q1.equals(q2);
-            System.out.println("Are the two measurements equal? " + result);
-
-            // Addition
-            QuantityLength sum = q1.add(q2, unit1);
-            System.out.println("Addition Result: " + sum);
-
-            // Conversion
-            QuantityLength converted = q1.convertTo(LengthUnit.INCHES);
-            System.out.println("Converted Value: " + converted);
-
-        } catch (IOException e) {
-            System.out.println("Input error: " + e.getMessage());
-        }
+        demonstrateEquality(w1, w2);
+        demonstrateConversion(w1, WeightUnit.GRAM);
+        demonstrateAddition(w1, w2, WeightUnit.KILOGRAM);
     }
 }
