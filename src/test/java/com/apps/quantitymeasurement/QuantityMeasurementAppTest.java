@@ -135,4 +135,37 @@ public class QuantityMeasurementAppTest {
 
         assertEquals(1.0, yards);
     }
+    @Test
+    void testEquality_KilogramToKilogram_SameValue() {
+
+        QuantityWeight w1 = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
+        QuantityWeight w2 = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
+
+        assertEquals(w1, w2);
+    }
+    @Test
+    void testEquality_KilogramToGram() {
+
+        QuantityWeight w1 = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
+        QuantityWeight w2 = new QuantityWeight(1000.0, WeightUnit.GRAM);
+
+        assertEquals(w1, w2);
+    }
+    @Test
+    void testConversion_KilogramToPound() {
+
+        QuantityWeight w = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
+
+        QuantityWeight result = w.convertTo(WeightUnit.POUND);
+
+        assertEquals(new QuantityWeight(2.20462, WeightUnit.POUND), result);
+    }
+    @Test
+    void testWeightVsLength_Incompatible() {
+
+        QuantityWeight weight = new QuantityWeight(1.0, WeightUnit.KILOGRAM);
+        QuantityLength length = new QuantityLength(1.0, LengthUnit.FEET);
+
+        assertFalse(weight.equals(length));
+    }
 }
