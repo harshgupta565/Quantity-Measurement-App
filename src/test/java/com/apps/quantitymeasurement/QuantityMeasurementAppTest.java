@@ -166,7 +166,7 @@ public class QuantityMeasurementAppTest {
         Quantity<VolumeUnit> v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
         Quantity<VolumeUnit> v2 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
 
-        assertTrue(v1.equals(v2));
+        assertEquals(v1, v2);
     }
     @Test
     void testAddition_LitrePlusMillilitre() {
@@ -183,5 +183,13 @@ public class QuantityMeasurementAppTest {
         Quantity<LengthUnit> length = new Quantity<>(1.0, LengthUnit.FEET);
 
         assertFalse(volume.equals(length));
+    }
+    @Test
+    void testMultiplication() {
+
+        Quantity<LengthUnit> q = new Quantity<>(2.0, LengthUnit.FEET);
+
+        assertEquals(new Quantity<>(4.0, LengthUnit.FEET),
+                q.multiply(2));
     }
 }
