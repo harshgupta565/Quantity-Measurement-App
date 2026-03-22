@@ -13,4 +13,16 @@ public interface IMeasurable {
     }
 
     String getUnitName();
+
+    //  NEW PART STARTS HERE
+
+    SupportsArithmetic supportsArithmetic = () -> true;
+
+    default boolean supportsArithmetic() {
+        return supportsArithmetic.isSupported();
+    }
+
+    default void validateOperationSupport(String operation) {
+        // default: sab allowed
+    }
 }
