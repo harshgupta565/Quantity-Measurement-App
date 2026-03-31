@@ -2,19 +2,19 @@ package com.apps.quantitymeasurement;
 
 public class QuantityMeasurementApp {
 
-    public static <U extends IMeasurable> void demonstrateEquality(
+    public static <U extends dto.IMeasurable> void demonstrateEquality(
             Quantity<U> q1, Quantity<U> q2) {
 
         System.out.println("Are equal: " + q1.equals(q2));
     }
 
-    public static <U extends IMeasurable> void demonstrateConversion(
+    public static <U extends dto.IMeasurable> void demonstrateConversion(
             Quantity<U> quantity, U targetUnit) {
 
         System.out.println(quantity.convertTo(targetUnit));
     }
 
-    public static <U extends IMeasurable> void demonstrateAddition(
+    public static <U extends dto.IMeasurable> void demonstrateAddition(
             Quantity<U> q1, Quantity<U> q2, U targetUnit) {
 
         System.out.println(q1.add(q2, targetUnit));

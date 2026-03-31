@@ -1,5 +1,5 @@
 package com.apps.quantitymeasurement;
-public enum VolumeUnit implements IMeasurable {
+public enum VolumeUnit implements dto.IMeasurable {
 
     LITRE(1.0),
     MILLILITRE(0.001),
