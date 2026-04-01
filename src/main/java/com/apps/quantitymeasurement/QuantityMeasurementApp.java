@@ -2,12 +2,24 @@ package com.apps.quantitymeasurement;
 
 import com.apps.quantitymeasurement.controller.QuantityController;
 import com.apps.quantitymeasurement.model.*;
+import com.apps.quantitymeasurement.repository.*;
+import com.apps.quantitymeasurement.service.QuantityService;
 
 public class QuantityMeasurementApp {
 
     public static void main(String[] args) {
 
-        QuantityController controller = new QuantityController();
+        //  Step 1: Create Repository
+        IQuantityMeasurementRepository repo =
+                new QuantityMeasurementDatabaseRepository();
+
+        //  Step 2: Inject into Service
+        QuantityService service = new QuantityService(repo);
+
+        // Step 3: Inject into Controller
+        QuantityController controller = new QuantityController(service);
+
+        //  Now use controller
 
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
         Quantity<LengthUnit> l2 = new Quantity<>(12.0, LengthUnit.INCHES);

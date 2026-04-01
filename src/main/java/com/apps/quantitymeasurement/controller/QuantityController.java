@@ -1,11 +1,17 @@
 package com.apps.quantitymeasurement.controller;
 
-import com.apps.quantitymeasurement.model.*;
+import com.apps.quantitymeasurement.model.IMeasurable;
+import com.apps.quantitymeasurement.model.Quantity;
 import com.apps.quantitymeasurement.service.QuantityService;
 
 public class QuantityController {
 
-    private final QuantityService service = new QuantityService();
+    private final QuantityService service;
+
+    // ✅ ADD THIS CONSTRUCTOR
+    public QuantityController(QuantityService service) {
+        this.service = service;
+    }
 
     public <U extends IMeasurable> void demonstrateEquality(
             Quantity<U> q1, Quantity<U> q2) {
