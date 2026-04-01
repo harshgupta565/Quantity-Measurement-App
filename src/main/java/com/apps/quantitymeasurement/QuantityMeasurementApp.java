@@ -1,55 +1,33 @@
 package com.apps.quantitymeasurement;
 
+import com.apps.quantitymeasurement.controller.QuantityController;
+import com.apps.quantitymeasurement.model.*;
+
 public class QuantityMeasurementApp {
 
-    public static <U extends dto.IMeasurable> void demonstrateEquality(
-            Quantity<U> q1, Quantity<U> q2) {
-
-        System.out.println("Are equal: " + q1.equals(q2));
-    }
-
-    public static <U extends dto.IMeasurable> void demonstrateConversion(
-            Quantity<U> quantity, U targetUnit) {
-
-        System.out.println(quantity.convertTo(targetUnit));
-    }
-
-    public static <U extends dto.IMeasurable> void demonstrateAddition(
-            Quantity<U> q1, Quantity<U> q2, U targetUnit) {
-
-        System.out.println(q1.add(q2, targetUnit));
-    }
-
     public static void main(String[] args) {
+
+        QuantityController controller = new QuantityController();
 
         Quantity<LengthUnit> l1 = new Quantity<>(1.0, LengthUnit.FEET);
         Quantity<LengthUnit> l2 = new Quantity<>(12.0, LengthUnit.INCHES);
 
-        demonstrateEquality(l1, l2);
-        demonstrateConversion(l1, LengthUnit.INCHES);
-        demonstrateAddition(l1, l2, LengthUnit.FEET);
+        controller.demonstrateEquality(l1, l2);
+        controller.demonstrateConversion(l1, LengthUnit.INCHES);
+        controller.demonstrateAddition(l1, l2, LengthUnit.FEET);
 
         Quantity<WeightUnit> w1 = new Quantity<>(1.0, WeightUnit.KILOGRAM);
         Quantity<WeightUnit> w2 = new Quantity<>(1000.0, WeightUnit.GRAM);
 
-        demonstrateEquality(w1, w2);
-        demonstrateConversion(w1, WeightUnit.GRAM);
-        demonstrateAddition(w1, w2, WeightUnit.KILOGRAM);
+        controller.demonstrateEquality(w1, w2);
+        controller.demonstrateConversion(w1, WeightUnit.GRAM);
+        controller.demonstrateAddition(w1, w2, WeightUnit.KILOGRAM);
 
-        Quantity<VolumeUnit> volume1 = new Quantity<>(1.0, VolumeUnit.LITRE);
-        Quantity<VolumeUnit> volume2 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
-        Quantity<VolumeUnit> volume3 = new Quantity<>(1.0, VolumeUnit.GALLON);
+        Quantity<VolumeUnit> v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
+        Quantity<VolumeUnit> v2 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
 
-        System.out.println("Volume Equality:");
-        System.out.println(volume1.equals(volume2));
-
-        System.out.println("Volume Conversion:");
-        System.out.println(volume1.convertTo(VolumeUnit.MILLILITRE));
-
-        System.out.println("Volume Addition:");
-        System.out.println(volume1.add(volume2));
-
-
+        controller.demonstrateEquality(v1, v2);
+        controller.demonstrateConversion(v1, VolumeUnit.MILLILITRE);
+        controller.demonstrateAddition(v1, v2, VolumeUnit.LITRE);
     }
-
 }

@@ -1,5 +1,5 @@
-package com.apps.quantitymeasurement;
-public enum TemperatureUnit implements dto.IMeasurable {
+package com.apps.quantitymeasurement.model;
+public enum TemperatureUnit implements IMeasurable {
 
     CELSIUS {
         @Override

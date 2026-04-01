@@ -1,8 +1,8 @@
-package com.apps.quantitymeasurement;
+package com.apps.quantitymeasurement.model;
 
 import java.util.Objects;
 
-public class Quantity<U extends dto.IMeasurable> {
+public class Quantity<U extends IMeasurable> {
 
     private final double value;
     private final U unit;
