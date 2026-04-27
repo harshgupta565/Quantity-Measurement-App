@@ -48,14 +48,10 @@ public enum TemperatureUnit implements IMeasurable {
         return this.name();
     }
 
-    private final SupportsArithmetic supportsArithmetic = () -> false;
-
     @Override
     public boolean supportsArithmetic() {
-        return supportsArithmetic.isSupported();
+        return false;
     }
-
-
     @Override
     public void validateOperationSupport(String operation) {
         throw new UnsupportedOperationException(

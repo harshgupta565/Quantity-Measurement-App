@@ -93,6 +93,13 @@ public class Quantity<U extends IMeasurable> {
         return performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
     }
 
+    public Quantity<U> multiply(double factor) {
+        if (!Double.isFinite(factor)) {
+            throw new IllegalArgumentException("Invalid multiplication factor");
+        }
+        return new Quantity<>(round(this.value * factor), this.unit);
+    }
+
     // ---------------- Centralized Helper ----------------
 
     private double performBaseArithmetic(Quantity<U> other, ArithmeticOperation operation) {

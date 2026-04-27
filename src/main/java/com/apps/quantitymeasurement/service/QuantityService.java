@@ -5,6 +5,9 @@ import com.apps.quantitymeasurement.model.Quantity;
 import com.apps.quantitymeasurement.repository.IQuantityMeasurementRepository;
 import com.apps.quantitymeasurement.entity.QuantityMeasurementEntity;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class QuantityService {
 
     private final IQuantityMeasurementRepository repository;

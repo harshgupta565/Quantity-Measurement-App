@@ -16,11 +16,9 @@ public interface IMeasurable {
 
     //  NEW PART STARTS HERE
 
-    //SupportsArithmetic supportsArithmetic = () -> true;
-
-   // default boolean supportsArithmetic() {
-       // return supportsArithmetic.isSupported();
-    //}
+    default boolean supportsArithmetic() {
+        return true;
+    }
 
     default void validateOperationSupport(String operation) {
         // default: sab allowed

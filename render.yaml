@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: quantity-measurement-api
+    env: docker
+    region: oregon
+    plan: free
+    branch: main
